@@ -23,12 +23,23 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private int mCurrentIndex = 0;
+    private static final String KEY_INDEX = "INDEX";
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(KEY_INDEX,mCurrentIndex);
+    }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (savedInstanceState !=null){
+            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX,0);
+        }
 
         mTrueButton = (Button)findViewById(R.id.buttonTrue);
         mTrueButton.setOnClickListener(new View.OnClickListener() {
