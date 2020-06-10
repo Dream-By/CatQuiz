@@ -1,5 +1,6 @@
 package com.example.catquiz;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     private int mCurrentIndex = 0;
     private static final String KEY_INDEX = "INDEX";
+    private Button mAnswerButton;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -66,6 +68,18 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestions.length;
                 getNextQuestion();
+            }
+        });
+
+        mAnswerButton = (Button)findViewById(R.id.buttonPeep);
+        mAnswerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Intent intent = new Intent(MainActivity.this,AnswersActivity.class);
+                boolean answerIsTrue = mQuestions[mCurrentIndex].ismIsRightAnswer();
+                Intent intent = AnswersActivity.sendIntent(MainActivity.this,
+                        answerIsTrue, mCurrentIndex);
+                startActivity(intent);
             }
         });
 
